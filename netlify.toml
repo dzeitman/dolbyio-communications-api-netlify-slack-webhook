@@ -1,0 +1,14 @@
+[build] 
+  publish = "www"
+  command = "echo No build command yet!"
+  functions = "functions"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+  
+[template.environment]
+  CONSUMER_KEY = "Get your Consumer Key from https://dolby.io/"
+  CONSUMER_SECRET = "Get your Consumer Secret from https://dolby.io/"
+  SLACK_WEBHOOK_URL = "Enter your slack webhook URL"
