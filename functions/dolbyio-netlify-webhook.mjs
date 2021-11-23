@@ -64,12 +64,14 @@ exports.handler = async (event, context) => {
     default:
       break;
   }
+ 
+   let photo = (participant.externalPhotoUrl != null) ? participant.externalPhotoUrl : "https://cdn-icons-png.flaticon.com/512/3088/3088784.png" 
 
  // process if there's a particpant object
  if(hasParticpantInfo){
   
  includeParticipantInfo = (eventType == 'Participant.Joined' || eventType == 'Participant.Joined') ? true : false;
-  let photo = (participant.externalPhotoUrl  != null) ? participant.externalPhotoUrl : "https://cdn-icons-png.flaticon.com/512/3088/3088784.png" 
+
     switch (eventType) {
     case 'Participant.Joined':
       text = `${announcement} has a new particpant.`
@@ -121,7 +123,7 @@ exports.handler = async (event, context) => {
     },
     "accessory": {
       "type": "image",
-      "image_url": participant.externalPhotoUrl,
+      "image_url": photo,
       "alt_text": `${participant.externalName}'s Avatar`
     }
   },
