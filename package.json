@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/dolbyio-samples/dolbyio-communications-api-netlify-slack-webhook/issues"
   },
-  "homepage": "https://github.com/dolbyio-samples/dolbyio-communications-api-netlify-slack-webhook#readme"
+  "homepage": "https://github.com/dolbyio-samples/dolbyio-communications-api-netlify-slack-webhook#readme",
+  "dependencies": {
+    "node-fetch": "^3.1.0"
+  }
 }
