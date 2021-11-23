@@ -25,7 +25,7 @@
 //  Our FAS
 exports.handler = async (event, context) => {
   const fetch = require("node-fetch");
-  const parse = require('parse');
+//   const parse = require('parse');
   // Dolby.io logo image
   const logoImage = "https://avatars.slack-edge.com/2021-07-28/2316131338342_1f6488351e04582ba704_512.jpg"
 
@@ -37,7 +37,7 @@ exports.handler = async (event, context) => {
 
   // When the method is POST, the name will no longer be in the event’s
   // queryStringParameters – it’ll be in the event body encoded as a queryString
-  const jsonPayload = parse(event.body);
+  const jsonPayload = JSON.parse(event.body);
   const eventType = jsonPayload.eventType;
   const conference = jsonPayload.conference;
   const participant = jsonPayload.participant;
