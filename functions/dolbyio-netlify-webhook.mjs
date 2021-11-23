@@ -12,7 +12,7 @@ exports.handler = async (event, context) => {
   }
 
   // When the method is POST, the name will no longer be in the event’s
-  // queryStringParameters – it’ll be in the event body encoded as a queryString
+
   const jsonPayload = JSON.parse(event.body);
   const eventType = jsonPayload.eventType;
   const conference = jsonPayload.conference;
