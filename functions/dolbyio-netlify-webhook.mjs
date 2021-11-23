@@ -25,7 +25,7 @@
 //  Our FAS
 exports.handler = async (event, context) => {
   const fetch = require("node-fetch");
-//   const parse = require('parse');
+
   // Dolby.io logo image
   const logoImage = "https://avatars.slack-edge.com/2021-07-28/2316131338342_1f6488351e04582ba704_512.jpg"
 
@@ -40,10 +40,15 @@ exports.handler = async (event, context) => {
   const jsonPayload = JSON.parse(event.body);
   const eventType = jsonPayload.eventType;
   const conference = jsonPayload.conference;
-  const participant = jsonPayload.participant;
+  const participant = (jsonPayload.participant) ? jsonPayload.participant : { "userId": "99999999999"
+    "externalId": "meet.dolby.io",
+    "externalName": "Anonymous",
+    "externalPhotoUrl": logoImage};
   let text = "Houston we have a problem..." // default error
+  
+  let alias = (conference.confAlias) ? conference.confAlias : conference.confId;
 
-  let announcement = `*${conference.confAlias} conference*`
+  let announcement = `*${alias} conference*`;
   let message = '';
   let includeParticipantInfo = (eventType == 'Participant.Joined' || eventType == 'Participant.Joined') ? true : false;
 
