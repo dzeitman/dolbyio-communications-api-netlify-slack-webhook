@@ -1,0 +1,24 @@
+{
+  "name": "dolbyio-communications-api-netlify-slack-webhook",
+  "version": "1.0.0",
+  "description": "Dolby.io Communications API Slack intergration with Netlify",
+  "main": "/functions/dolbyio-netlify-webhook.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dolbyio-samples/dolbyio-communications-api-netlify-slack-webhook.git"
+  },
+  "keywords": [
+    "Communications",
+    "API",
+    "Dolby.io"
+  ],
+  "author": "Dan Zeitman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dolbyio-samples/dolbyio-communications-api-netlify-slack-webhook/issues"
+  },
+  "homepage": "https://github.com/dolbyio-samples/dolbyio-communications-api-netlify-slack-webhook#readme"
+}
