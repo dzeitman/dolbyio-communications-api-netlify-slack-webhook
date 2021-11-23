@@ -73,26 +73,6 @@ exports.handler = async (event, context) => {
    */
   let state = (eventType == 'Participant.Joined') ? 'active' : "inactive"
 
-  let linkBlock = [{
-    "type": "section",
-    "text": {
-      "type": "mrkdwn",
-      "text": `Conference is currently ${state}!`
-    },
-    "accessory": {
-      "type": "button",
-      "text": {
-        "type": "plain_text",
-        "text": "Join Conference",
-        "emoji": true
-      },
-      "value": "click_me_123",
-      "url": `https://meet.dolby.io/map-navigator-app/#/?cell=${alias}`,
-      "action_id": "button-action"
-    }
-  }]
-
-
   // message header
   let headerBlock = [{
     "type": "section",
@@ -108,6 +88,7 @@ exports.handler = async (event, context) => {
   }]
 
   // conditional participant info
+  
   let participantInfoBlock = [{
     "type": "divider"
   },
@@ -127,8 +108,31 @@ exports.handler = async (event, context) => {
     "type": "divider"
   }];
 
+  
+  // link to our conference app
+  
+  let linkBlock = [{
+    "type": "section",
+    "text": {
+      "type": "mrkdwn",
+      "text": `Conference is currently ${state}!`
+    },
+    "accessory": {
+      "type": "button",
+      "text": {
+        "type": "plain_text",
+        "text": "Join Conference",
+        "emoji": true
+      },
+      "value": "click_me_123",
+      "url": `https://meet.dolby.io/map-navigator-app/#/?cell=${alias}`,
+      "action_id": "button-action"
+    }
+  }]
+  
+  
   /**
-   *  Conditionally include the participant info
+   *  Conditionally include the participant info and link block
    */
 
   let slackBlocks = (includeParticipantInfo) ? headerBlock.concat(participantInfoBlock,linkBlock) : headerBlock;
@@ -139,7 +143,7 @@ exports.handler = async (event, context) => {
     "blocks": slackBlocks
   };
 
-
+// Post formatted block message to slack
   const options = {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
