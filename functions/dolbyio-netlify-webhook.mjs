@@ -1,9 +1,5 @@
 exports.handler = async (event, context) => {
-
- const headers = JSON.parse(event.headers);
  
-  console.log('Headers: ', headers);
-  
   const axios = require('axios');
 
   // Dolby.io logo image
