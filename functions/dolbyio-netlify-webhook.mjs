@@ -100,19 +100,22 @@ exports.handler = async (event, context) => {
    *  blocks of info and store as arrays.
    */
 let linkBlock = [{
-			"type": "actions",
-			"elements": [
-				{
-					"type": "button",
-					"text": {
-						"type": "plain_text",
-						"text": "Join Conference",
-						"emoji": true
-					},
-					"value": `https://meet.dolby.io/map-navigator-app/#/?cell=${alias}`,
-					"action_id": "actionId-0"
-				}
-			]
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Conference is currently active!"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Join Conference",
+					"emoji": true
+				},
+				"value": "click_me_123",
+				"url": `https://meet.dolby.io/map-navigator-app/#/?cell=${alias}`,
+				"action_id": "button-action"
+			}
 		}]
  
  
