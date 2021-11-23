@@ -40,11 +40,11 @@ exports.handler = async (event, context) => {
   const jsonPayload = JSON.parse(event.body);
   const eventType = jsonPayload.eventType;
   const conference = jsonPayload.conference;
-  const participant = (jsonPayload.participant) ? jsonPayload.participant : null;
+  const participant = (jsonPayload.participant != null) ? jsonPayload.participant : null;
   
   let text = "Houston we have a problem..." // default error
   
-  let alias = (conference.confAlias) ? conference.confAlias : conference.confId;
+  let alias = (conference.confAlias != null) ? conference.confAlias : conference.confId;
 
   let announcement = `*${alias} conference*`;
   let message = '';
@@ -69,7 +69,7 @@ exports.handler = async (event, context) => {
  if(hasParticpantInfo){
   
  includeParticipantInfo = (eventType == 'Participant.Joined' || eventType == 'Participant.Joined') ? true : false;
-  let photo = (participant.externalPhotoUrl) ? participant.externalPhotoUrl : "https://cdn-icons-png.flaticon.com/512/3088/3088784.png" 
+  let photo = (participant.externalPhotoUrl  != null) ? participant.externalPhotoUrl : "https://cdn-icons-png.flaticon.com/512/3088/3088784.png" 
     switch (eventType) {
     case 'Participant.Joined':
       text = `${announcement} has a new particpant.`
