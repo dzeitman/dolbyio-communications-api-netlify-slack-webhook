@@ -152,15 +152,15 @@ exports.handler = async (event, context) => {
     method: "POST",
     body: JSON.stringify(slackBlockMessage),
   })
-  .then(() => ({
+    .then(() => ({
       statusCode: 200,
       body: `${announcement} message has been sent to Slack 👋`,
     }))
-  .catch(function (error) ({
+ .catch((error) => ({
       statusCode: 422,
       body: `Oops! Something went wrong. ${error}`,
-    }))
- 
+    }));
+  
 
 //   // Send slackBlockMessage to Slack
 //   return fetch(process.env.SLACK_WEBHOOK_URL, {
