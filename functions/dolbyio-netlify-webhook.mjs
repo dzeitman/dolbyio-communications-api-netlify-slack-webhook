@@ -40,7 +40,8 @@ exports.handler = async (event, context) => {
       break;
   }
 
-  includeParticipantInfo = (hasParticpantInfo && (eventType == 'Participant.Joined' || eventType == 'Participant.Joined')) ? true : false;
+  includeParticipantInfo = (hasParticpantInfo && (eventType == 'Participant.Joined' || eventType == 'Participant.Left')) ? true : false;
+ 
   let photo = (hasParticpantInfo && (participant.externalPhotoUrl != null)) ? participant.externalPhotoUrl : "https://cdn-icons-png.flaticon.com/512/3088/3088784.png"
 
   let extName = (hasParticpantInfo && (participant.externalName != null)) ? participant.externalName : "Anonymous";
