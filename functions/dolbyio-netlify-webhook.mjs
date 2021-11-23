@@ -1,7 +1,8 @@
 exports.handler = async (event, context) => {
 
  const headers = JSON.parse(event.headers);
-  console.log('Headers: ', headers['dolby-signature']);
+ 
+  console.log('Headers: ', headers);
   
   const axios = require('axios');
 
