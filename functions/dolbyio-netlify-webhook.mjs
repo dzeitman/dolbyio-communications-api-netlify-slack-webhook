@@ -24,9 +24,10 @@
 
 //  Our FAS
 exports.handler = async (event, context) => {
-  const fetch = require("node-fetch");
-//  const fetch = request('node-fetch').default;
-// import fetch from 'node-fetch';
+//   const fetch = require("node-fetch");
+ 
+   const axios = require('axios');
+ 
   // Dolby.io logo image
   const logoImage = "https://avatars.slack-edge.com/2021-07-28/2316131338342_1f6488351e04582ba704_512.jpg"
 
@@ -144,21 +145,37 @@ exports.handler = async (event, context) => {
     "blocks": slackBlocks
   };
 
-
-  // Send slackBlockMessage to Slack
-  return fetch(process.env.SLACK_WEBHOOK_URL, {
+   axios.post(process.env.SLACK_WEBHOOK_URL', {
     headers: {
       "content-type": "application/json",
     },
     method: "POST",
     body: JSON.stringify(slackBlockMessage),
   })
-    .then(() => ({
+  .then(() => ({
       statusCode: 200,
       body: `${announcement} message has been sent to Slack 👋`,
     }))
-    .catch((error) => ({
+  .catch(function (error) ({
       statusCode: 422,
       body: `Oops! Something went wrong. ${error}`,
-    }));
+    }))
+ 
+
+//   // Send slackBlockMessage to Slack
+//   return fetch(process.env.SLACK_WEBHOOK_URL, {
+//     headers: {
+//       "content-type": "application/json",
+//     },
+//     method: "POST",
+//     body: JSON.stringify(slackBlockMessage),
+//   })
+//     .then(() => ({
+//       statusCode: 200,
+//       body: `${announcement} message has been sent to Slack 👋`,
+//     }))
+//     .catch((error) => ({
+//       statusCode: 422,
+//       body: `Oops! Something went wrong. ${error}`,
+//     }));
 };
