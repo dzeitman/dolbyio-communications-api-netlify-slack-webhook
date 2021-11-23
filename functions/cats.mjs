@@ -1,4 +1,6 @@
-const fetch = require('node-fetch')
+// const fetch = require('node-fetch')
+// import fetch
+global.fetch = require("node-fetch");
 
 const API_ENDPOINT = 'https://cat-fact.herokuapp.com/facts'
 
