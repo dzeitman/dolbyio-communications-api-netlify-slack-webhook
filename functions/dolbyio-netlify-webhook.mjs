@@ -1,5 +1,7 @@
 exports.handler = async (event, context) => {
 
+  console.log(event);
+  console.log(context);
   const axios = require('axios');
 
   // Dolby.io logo image
