@@ -25,7 +25,7 @@
 //  Our FAS
 exports.handler = async (event, context) => {
   const fetch = require("node-fetch");
-  const parse = require('parse').Parse;
+  const parse = require('parse');
   // Dolby.io logo image
   const logoImage = "https://avatars.slack-edge.com/2021-07-28/2316131338342_1f6488351e04582ba704_512.jpg"
 
