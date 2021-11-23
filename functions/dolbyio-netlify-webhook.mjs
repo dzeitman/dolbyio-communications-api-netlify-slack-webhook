@@ -148,7 +148,7 @@ exports.handler = async (event, context) => {
   
 const options = {
   method: 'POST',
-  headers: {  'content-type": "application/json'},
+  headers: {  'content-type': 'application/json'},
   data: JSON.stringify(slackBlockMessage),
   url: process.env.SLACK_WEBHOOK_URL,
 };
