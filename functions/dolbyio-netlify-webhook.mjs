@@ -21,10 +21,10 @@
 // const querystring = require("querystring");
 // const fetch = require("node-fetch");
 // import { fetch } from 'node-fetch';
-
+  const fetch = require("node-fetch");
 //  Our FAS
 exports.handler = async (event, context) => {
-  const fetch = require("node-fetch");
+
 
   // Dolby.io logo image
   const logoImage = "https://avatars.slack-edge.com/2021-07-28/2316131338342_1f6488351e04582ba704_512.jpg"
@@ -40,7 +40,7 @@ exports.handler = async (event, context) => {
   const jsonPayload = JSON.parse(event.body);
   const eventType = jsonPayload.eventType;
   const conference = jsonPayload.conference;
-  const participant = jsonPayload.participant;
+  const participant = (jsonPayload.participant) ? jsonPayload.participant : null;
   
   let text = "Houston we have a problem..." // default error
   
@@ -50,7 +50,7 @@ exports.handler = async (event, context) => {
   let message = '';
  
  let includeParticipantInfo = false;
- let hasParticpantInfo = (participant) ? true : false; 
+ let hasParticpantInfo = (participant != null) ? true : false; 
  
 
  // process conference
@@ -69,17 +69,17 @@ exports.handler = async (event, context) => {
  if(hasParticpantInfo){
   
  includeParticipantInfo = (eventType == 'Participant.Joined' || eventType == 'Participant.Joined') ? true : false;
-  
+  let photo = (participant.externalPhotoUrl) ? participant.externalPhotoUrl : "https://cdn-icons-png.flaticon.com/512/3088/3088784.png" 
     switch (eventType) {
     case 'Participant.Joined':
       text = `${announcement} has a new particpant.`
       message = `${participant.externalName} has joined the  conference.`;
-      imageURL = participant.externalPhotoUrl;
+      imageURL = photo;
       break;
     case 'Participant.Left':
       text = `A particpant has left ${announcement}`
       message = `${participant.externalName} has left the conference.`;
-      imageURL = participant.externalPhotoUrl;
+      imageURL = photo;
       break;
     default:
       break;
