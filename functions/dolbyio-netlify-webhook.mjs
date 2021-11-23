@@ -1,33 +1,9 @@
-/**
- * 
- {
-  "eventType": "Participant.Joined",
-  "thirdPartyId": "example_thirdpartyId",
-  "conference": {
-    "confId": "conferenceId_UUID",
-    "confAlias": "example_conference_alias"
-  },
-
-  "region": "eu",
-  "participant": {
-    "userId": "userId_UUID"
-    "externalId": "example_externalId",
-    "externalName": "example_externalName",
-    "externalPhotoUrl": "example_externalPhotoUrl"
-  }
-}
- */
-
-// const querystring = require("querystring");
-// const fetch = require("node-fetch");
-// import { fetch } from 'node-fetch';
 
 //  Our FAS
 exports.handler = async (event, context) => {
-//   const fetch = require("node-fetch");
- 
-   const axios = require('axios');
- 
+
+  const axios = require('axios');
+
   // Dolby.io logo image
   const logoImage = "https://avatars.slack-edge.com/2021-07-28/2316131338342_1f6488351e04582ba704_512.jpg"
 
@@ -43,19 +19,18 @@ exports.handler = async (event, context) => {
   const eventType = jsonPayload.eventType;
   const conference = jsonPayload.conference;
   const participant = (jsonPayload.participant != null) ? jsonPayload.participant : null;
-  
+
   let text = "Houston we have a problem..." // default error
-  
+
   let alias = (conference.confAlias != null) ? conference.confAlias : conference.confId;
 
   let announcement = `*${alias} conference*`;
   let message = '';
- 
- let includeParticipantInfo = false;
- let hasParticpantInfo = (participant != null) ? true : false; 
- 
 
- // process conference
+  let includeParticipantInfo = false;
+  let hasParticpantInfo = (participant != null) ? true : false;
+
+  // process conference
   switch (eventType) {
     case 'Conference.Created':
       text = `${announcement} has been created.`
@@ -66,59 +41,57 @@ exports.handler = async (event, context) => {
     default:
       break;
   }
- 
+
   includeParticipantInfo = (hasParticpantInfo && (eventType == 'Participant.Joined' || eventType == 'Participant.Joined')) ? true : false;
-   let photo = (hasParticpantInfo && (participant.externalPhotoUrl != null)) ? participant.externalPhotoUrl : "https://cdn-icons-png.flaticon.com/512/3088/3088784.png" 
+  let photo = (hasParticpantInfo && (participant.externalPhotoUrl != null)) ? participant.externalPhotoUrl : "https://cdn-icons-png.flaticon.com/512/3088/3088784.png"
 
-   let extName =  (hasParticpantInfo && (participant.externalName != null )) ? participant.externalName : "Anonymous";
- 
- // process if there's a particpant object
+  let extName = (hasParticpantInfo && (participant.externalName != null)) ? participant.externalName : "Anonymous";
 
- if(hasParticpantInfo){ 
+  // process if there's a particpant object
+
+  if (hasParticpantInfo) {
     switch (eventType) {
-    case 'Participant.Joined':
-      text = `${announcement} has a new particpant.`
-      message = `${participant.externalName} has joined the  conference.`;
-      imageURL = photo;
-      break;
-    case 'Participant.Left':
-      text = `A particpant has left ${announcement}`
-      message = `${participant.externalName} has left the conference.`;
-      imageURL = photo;
-      break;
-    default:
-      break;
+      case 'Participant.Joined':
+        text = `${announcement} has a new particpant.`
+        message = `${participant.externalName} has joined the  conference.`;
+        imageURL = photo;
+        break;
+      case 'Participant.Left':
+        text = `A particpant has left ${announcement}`
+        message = `${participant.externalName} has left the conference.`;
+        imageURL = photo;
+        break;
+      default:
+        break;
+    }
   }
- }
 
- 
- 
   /**
    * Format output for Slask Block Kit 
    * https://app.slack.com/block-kit-builder/ 
    *  We'll create a header and conditional participant info 
    *  blocks of info and store as arrays.
    */
-let linkBlock = [{
-			"type": "section",
-			"text": {
-				"type": "mrkdwn",
-				"text": "Conference is currently active!"
-			},
-			"accessory": {
-				"type": "button",
-				"text": {
-					"type": "plain_text",
-					"text": "Join Conference",
-					"emoji": true
-				},
-				"value": "click_me_123",
-				"url": `https://meet.dolby.io/map-navigator-app/#/?cell=${alias}`,
-				"action_id": "button-action"
-			}
-		}]
- 
- 
+  let linkBlock = [{
+    "type": "section",
+    "text": {
+      "type": "mrkdwn",
+      "text": "Conference is currently active!"
+    },
+    "accessory": {
+      "type": "button",
+      "text": {
+        "type": "plain_text",
+        "text": "Join Conference",
+        "emoji": true
+      },
+      "value": "click_me_123",
+      "url": `https://meet.dolby.io/map-navigator-app/#/?cell=${alias}`,
+      "action_id": "button-action"
+    }
+  }]
+
+
   // message header
   let headerBlock = [{
     "type": "section",
@@ -153,57 +126,54 @@ let linkBlock = [{
     "type": "divider"
   }];
 
-/**
- *  Conditionally include the participant info
- */
+  /**
+   *  Conditionally include the participant info
+   */
 
-  let slackBlocks = (includeParticipantInfo) ? headerBlock.concat(participantInfoBlock,linkBlock) : headerBlock.concat(linkBlock);
-  
+  let slackBlocks = (includeParticipantInfo) ? headerBlock.concat(participantInfoBlock, linkBlock) : headerBlock.concat(linkBlock);
+
   // Final composed slack formatted block message
   let slackBlockMessage = {
     "blocks": slackBlocks
   };
- 
-  
-const options = {
-  method: 'POST',
-  headers: {  'content-type': 'application/json'},
-  data: JSON.stringify(slackBlockMessage),
-  url: process.env.SLACK_WEBHOOK_URL,
-};
- 
-//    axios.post(process.env.SLACK_WEBHOOK_URL, {
-//     headers: {
-//       "content-type": "application/json",
-//     },
-//     method: "POST",
-//     body: JSON.stringify(slackBlockMessage),
-//   })
-     axios(options)
+
+
+  const options = {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    data: JSON.stringify(slackBlockMessage),
+    url: process.env.SLACK_WEBHOOK_URL,
+  };
+
+  axios(options)
     .then(() => ({
       statusCode: 200,
       body: `${announcement} message has been sent to Slack 👋`,
     }))
- .catch((error) => ({
+    .catch((error) => ({
       statusCode: 422,
       body: `Oops! Something went wrong. ${error}`,
     }));
-  
 
-//   // Send slackBlockMessage to Slack
-//   return fetch(process.env.SLACK_WEBHOOK_URL, {
-//     headers: {
-//       "content-type": "application/json",
-//     },
-//     method: "POST",
-//     body: JSON.stringify(slackBlockMessage),
-//   })
-//     .then(() => ({
-//       statusCode: 200,
-//       body: `${announcement} message has been sent to Slack 👋`,
-//     }))
-//     .catch((error) => ({
-//       statusCode: 200,
-//       body: `Oops! Something went wrong. ${error}`,
-//     }));
 };
+
+
+/**
+* example
+{
+"eventType": "Participant.Joined",
+"thirdPartyId": "example_thirdpartyId",
+"conference": {
+  "confId": "conferenceId_UUID",
+  "confAlias": "example_conference_alias"
+},
+
+"region": "eu",
+"participant": {
+  "userId": "userId_UUID"
+  "externalId": "example_externalId",
+  "externalName": "example_externalName",
+  "externalPhotoUrl": "example_externalPhotoUrl"
+}
+}
+*/
