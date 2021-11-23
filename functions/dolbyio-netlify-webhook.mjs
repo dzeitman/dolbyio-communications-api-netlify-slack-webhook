@@ -131,10 +131,8 @@ exports.handler = async (event, context) => {
    *  Conditionally include the participant info
    */
 
-  let slackBlocks = (includeParticipantInfo) ? headerBlock.concat(participantInfoBlock) : headerBlock;
-  if (state == 'active') {
-    slackBlocks.concat(linkBlock)
-  }
+  let slackBlocks = (includeParticipantInfo) ? headerBlock.concat(participantInfoBlock,linkBlock) : headerBlock;
+   
 
   // Final composed slack formatted block message
   let slackBlockMessage = {
