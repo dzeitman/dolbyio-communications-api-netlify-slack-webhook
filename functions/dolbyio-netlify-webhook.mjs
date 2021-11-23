@@ -153,10 +153,10 @@ exports.handler = async (event, context) => {
     method: "POST",
     body: JSON.stringify(slackBlockMessage),
   })
-    .then(() => ({
-      statusCode: 200,
-      body: `${announcement} message has been sent to Slack 👋`,
-    }))
+//     .then(() => ({
+//       statusCode: 200,
+//       body: `${announcement} message has been sent to Slack 👋`,
+//     }))
     .catch((error) => ({
       statusCode: 422,
       body: `Oops! Something went wrong. ${error}`,
