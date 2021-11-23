@@ -175,7 +175,7 @@ exports.handler = async (event, context) => {
 //       body: `${announcement} message has been sent to Slack 👋`,
 //     }))
 //     .catch((error) => ({
-//       statusCode: 422,
+//       statusCode: 200,
 //       body: `Oops! Something went wrong. ${error}`,
 //     }));
 };
