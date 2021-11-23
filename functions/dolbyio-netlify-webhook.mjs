@@ -25,8 +25,8 @@
 //  Our FAS
 exports.handler = async (event, context) => {
 //   const fetch = require("node-fetch");
- const fetch = request('node-fetch').default;
-
+//  const fetch = request('node-fetch').default;
+import fetch from 'node-fetch';
   // Dolby.io logo image
   const logoImage = "https://avatars.slack-edge.com/2021-07-28/2316131338342_1f6488351e04582ba704_512.jpg"
 
@@ -153,10 +153,10 @@ exports.handler = async (event, context) => {
     method: "POST",
     body: JSON.stringify(slackBlockMessage),
   })
-//     .then(() => ({
-//       statusCode: 200,
-//       body: `${announcement} message has been sent to Slack 👋`,
-//     }))
+    .then(() => ({
+      statusCode: 200,
+      body: `${announcement} message has been sent to Slack 👋`,
+    }))
     .catch((error) => ({
       statusCode: 422,
       body: `Oops! Something went wrong. ${error}`,
