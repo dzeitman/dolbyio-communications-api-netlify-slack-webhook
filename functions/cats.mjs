@@ -1,10 +1,11 @@
 // const fetch = require('node-fetch')
 // import fetch
-global.fetch = require("node-fetch");
 
-const API_ENDPOINT = 'https://cat-fact.herokuapp.com/facts'
 
 exports.handler = async (event, context) => {
+  global.fetch = require("node-fetch");
+
+const API_ENDPOINT = 'https://cat-fact.herokuapp.com/facts'
   let response
   try {
     response = await fetch(API_ENDPOINT)
