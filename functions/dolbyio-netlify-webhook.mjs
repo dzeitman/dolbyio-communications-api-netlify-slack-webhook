@@ -40,18 +40,20 @@ exports.handler = async (event, context) => {
   const jsonPayload = JSON.parse(event.body);
   const eventType = jsonPayload.eventType;
   const conference = jsonPayload.conference;
-  const participant = (jsonPayload.participant) ? jsonPayload.participant : { "userId": "99999999999"
-    "externalId": "meet.dolby.io",
-    "externalName": "Anonymous",
-    "externalPhotoUrl": logoImage};
+  const participant = jsonPayload.participant;
+  
   let text = "Houston we have a problem..." // default error
   
   let alias = (conference.confAlias) ? conference.confAlias : conference.confId;
 
   let announcement = `*${alias} conference*`;
   let message = '';
-  let includeParticipantInfo = (eventType == 'Participant.Joined' || eventType == 'Participant.Joined') ? true : false;
+ 
+ let includeParticipantInfo = false;
+ let hasParticpantInfo = (participant) ? true : false; 
+ 
 
+ // process conference
   switch (eventType) {
     case 'Conference.Created':
       text = `${announcement} has been created.`
@@ -59,6 +61,16 @@ exports.handler = async (event, context) => {
     case 'Conference.Ended':
       text = `${announcement} has ended.`
       break;
+    default:
+      break;
+  }
+
+ // process if there's a particpant object
+ if(hasParticpantInfo){
+  
+ includeParticipantInfo = (eventType == 'Participant.Joined' || eventType == 'Participant.Joined') ? true : false;
+  
+    switch (eventType) {
     case 'Participant.Joined':
       text = `${announcement} has a new particpant.`
       message = `${participant.externalName} has joined the  conference.`;
@@ -72,7 +84,10 @@ exports.handler = async (event, context) => {
     default:
       break;
   }
+ }
 
+ 
+ 
   /**
    * Format output for Slask Block Kit 
    * https://app.slack.com/block-kit-builder/ 
