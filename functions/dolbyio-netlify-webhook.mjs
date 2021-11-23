@@ -144,7 +144,7 @@ exports.handler = async (event, context) => {
   let slackBlockMessage = {
     "blocks": slackBlocks
   };
-
+ 
    axios.post(process.env.SLACK_WEBHOOK_URL, {
     headers: {
       "content-type": "application/json",
