@@ -145,13 +145,22 @@ exports.handler = async (event, context) => {
     "blocks": slackBlocks
   };
  
-   axios.post(process.env.SLACK_WEBHOOK_URL, {
-    headers: {
-      "content-type": "application/json",
-    },
-    method: "POST",
-    body: JSON.stringify(slackBlockMessage),
-  })
+  
+const options = {
+  method: 'POST',
+  headers: {  'content-type": "application/json'},
+  data: JSON.stringify(slackBlockMessage),
+  url: process.env.SLACK_WEBHOOK_URL,
+};
+ 
+//    axios.post(process.env.SLACK_WEBHOOK_URL, {
+//     headers: {
+//       "content-type": "application/json",
+//     },
+//     method: "POST",
+//     body: JSON.stringify(slackBlockMessage),
+//   })
+     axios(options)
     .then(() => ({
       statusCode: 200,
       body: `${announcement} message has been sent to Slack 👋`,
