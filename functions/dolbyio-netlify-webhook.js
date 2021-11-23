@@ -19,8 +19,8 @@
  */
 
 // const querystring = require("querystring");
-const fetch = require("node-fetch");
-
+// const fetch = require("node-fetch");
+import { fetch } from 'node-fetch';
 
 //  Our FAS
 exports.handler = async (event, context) => {
