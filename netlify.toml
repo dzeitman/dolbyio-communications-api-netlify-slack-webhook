@@ -1,6 +1,6 @@
 [build] 
   publish = "www"
-  command = "echo No build command yet!"
+  command = "npm install"
   functions = "functions"
 
 [[redirects]]
