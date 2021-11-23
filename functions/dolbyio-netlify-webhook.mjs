@@ -1,5 +1,3 @@
-
-//  Our FAS
 exports.handler = async (event, context) => {
 
   const axios = require('axios');
@@ -71,12 +69,15 @@ exports.handler = async (event, context) => {
    * https://app.slack.com/block-kit-builder/ 
    *  We'll create a header and conditional participant info 
    *  blocks of info and store as arrays.
+   *
    */
+  let state = (eventType == 'Participant.Joined') ? 'active' : "inactive"
+
   let linkBlock = [{
     "type": "section",
     "text": {
       "type": "mrkdwn",
-      "text": "Conference is currently active!"
+      "text": `Conference is currently ${state}!`
     },
     "accessory": {
       "type": "button",
@@ -130,7 +131,10 @@ exports.handler = async (event, context) => {
    *  Conditionally include the participant info
    */
 
-  let slackBlocks = (includeParticipantInfo) ? headerBlock.concat(participantInfoBlock, linkBlock) : headerBlock.concat(linkBlock);
+  let slackBlocks = (includeParticipantInfo) ? headerBlock.concat(participantInfoBlock) : headerBlock;
+  if (state == 'active') {
+    slackBlocks.concat(linkBlock)
+  }
 
   // Final composed slack formatted block message
   let slackBlockMessage = {
