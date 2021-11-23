@@ -99,7 +99,23 @@ exports.handler = async (event, context) => {
    *  We'll create a header and conditional participant info 
    *  blocks of info and store as arrays.
    */
-
+let linkBlock = [{
+			"type": "actions",
+			"elements": [
+				{
+					"type": "button",
+					"text": {
+						"type": "plain_text",
+						"text": "Join Conference",
+						"emoji": true
+					},
+					"value": `https://meet.dolby.io/map-navigator-app/#/?cell=${alias}`,
+					"action_id": "actionId-0"
+				}
+			]
+		}]
+ 
+ 
   // message header
   let headerBlock = [{
     "type": "section",
@@ -138,7 +154,7 @@ exports.handler = async (event, context) => {
  *  Conditionally include the participant info
  */
 
-  let slackBlocks = (includeParticipantInfo) ? headerBlock.concat(participantInfoBlock) : headerBlock;
+  let slackBlocks = (includeParticipantInfo) ? headerBlock.concat(participantInfoBlock,linkBlock) : headerBlock.concat(linkBlock);
   
   // Final composed slack formatted block message
   let slackBlockMessage = {
