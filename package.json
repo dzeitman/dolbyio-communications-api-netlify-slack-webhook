@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Dolby.io Communications API Slack intergration with Netlify",
   "main": "/functions/dolbyio-netlify-webhook.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
